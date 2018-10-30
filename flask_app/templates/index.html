@@ -1,0 +1,112 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Modern Portfolio Theory PoC</title>
+<style>
+table, th, td {
+     border: 1px solid black;
+}
+table {
+      border-collapse: collapse;
+      width: 600px;
+}
+th, td {
+      padding: 15px;
+      text-align: center;
+}
+</style>
+  </head>
+
+  <body>
+    <h1>Modern Portfolio Theory Poc</h1>
+    <h2>The Proof of Concept</h2>
+    <p>Here I simply applied the MPT with a selection of 5 assets (stocks) in order to find the best asset distribution in order to maximize the returns given a risk tolerence</p>
+    <p>The selected stocks were:</p>
+    <ul>
+      <li>KO - The Coca-Cola Co</li>
+      <li>PFE - Pfizer Inc.</li>
+      <li>AAPL - Apple Inc.</li>
+      <li>WTI - W&amp;T Offshore, Inc.</li>
+      <li>TSLA - Tesla Inc</li>
+    </ul>
+    <p>For simplicity's sake the expected returns were estimated using a mean of the daily returns over the last four years, from the 01/01/2014 to the 31/12/2017</p>
+    <p>Also for the sharpe ratio a risk free rate of return of 0% is supposed here</p>
+    <h2>The Demo</h2>
+    <form action="/" method="post">
+      <label>Choose the acceptable volatility of the portfolio</label><br/>
+      <input id="risk" name="risk" type ="range" value={{ risk.chosen }} min={{ risk.min }} max={{ risk.max }} step ="0.005" oninput="riskValue.value = risk.value" />
+      <output name="riskValue" id="riskValue">{{ risk.chosen }}</output><br/>
+      <input type="submit" value="Find portfolio">
+    </form>
+    <img id="img" src="static/plot.png" />
+    <script>
+      var img = document.getElementById("img");
+      img.setAttribute('src', 'static/plot.png?t=' + new Date().getTime());
+    </script>
+    <p> The selected portfolio is the red square on the graph <p>
+    <h2>Results</h2>
+    <p>
+    Selected Portfolio: The portfolio with the best return given the chosen risk (default to Best Portfolio)<br/>
+    Best Portfolio: The portfolio with the best Sharpe Ratio<br/>
+    Min Risk Portfolio: The portofolio for anxious people :)
+    </p>
+    <table>
+      <tr>
+        <th></th>
+        <th><span style="font-weight:bold">Selected Portfolio</span></th>
+        <th><span style="font-weight:bold">Best Portfolio</span></th>
+        <th><span style="font-weight:bold">Min Risk Portfolio</span></th>
+      </tr>
+      <tr>
+        <td><span style="font-style:italic">Returns</span></td>
+        <td>{{ "%0.2f" | format(portfolio.selected['Returns'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.sharpe['Returns'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.min_risk['Returns'].item() * 100) }}%</td>
+      </tr>
+      <tr>
+        <td><span style="font-style:italic">Volatility</span></td>
+        <td>{{ "%0.2f" | format(portfolio.selected['Volatility'].item() * 100) }}%<br></td>
+        <td>{{ "%0.2f" | format(portfolio.sharpe['Volatility'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.min_risk['Volatility'].item() * 100) }}%</td>
+      </tr>
+      <tr>
+        <td><span style="font-style:italic">Sharpe Ratio</span></td>
+        <td>{{ "%0.2f" | format(portfolio.selected['Sharpe Ratio'].item()) }}</td>
+        <td>{{ "%0.2f" | format(portfolio.sharpe['Sharpe Ratio'].item()) }}</td>
+        <td>{{ "%0.2f" | format(portfolio.min_risk['Sharpe Ratio'].item()) }}</td>
+      </tr>
+      <tr>
+        <td>KO Weight</td>
+        <td>{{ "%0.2f" | format(portfolio.selected['KO Weight'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.sharpe['KO Weight'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.min_risk['KO Weight'].item() * 100) }}%</td>
+      </tr>
+      <tr>
+        <td>PFE Weight</td>
+        <td>{{ "%0.2f" | format(portfolio.selected['PFE Weight'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.sharpe['PFE Weight'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.min_risk['PFE Weight'].item() * 100) }}%</td>
+      </tr>
+      <tr>
+        <td>AAPL Weight</td>
+        <td>{{ "%0.2f" | format(portfolio.selected['AAPL Weight'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.sharpe['AAPL Weight'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.min_risk['AAPL Weight'].item() * 100) }}%</td>
+      </tr>
+      <tr>
+        <td>WTI Weight</td>
+        <td>{{ "%0.2f" | format(portfolio.selected['WTI Weight'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.sharpe['WTI Weight'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.min_risk['WTI Weight'].item() * 100) }}%</td>
+      </tr>
+      <tr>
+        <td>TSLA Weight</td>
+        <td>{{ "%0.2f" | format(portfolio.selected['TSLA Weight'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.sharpe['TSLA Weight'].item() * 100) }}%</td>
+        <td>{{ "%0.2f" | format(portfolio.min_risk['TSLA Weight'].item() * 100) }}%</td>
+      </tr>
+    </table>
+  </body>
+</html>
