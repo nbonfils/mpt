@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import os
     
 # setup quandl api
-quandl.ApiConfig.api_key = 'ExKfeNE2oKQGyYM_KFk1'
+quandl.ApiConfig.api_key = '' # insert API key here
 
 #stocks = ['CNP', 'F', 'WMT', 'GE', 'TSLA']
 stocks = ['KO', 'PFE', 'AAPL', 'WTI', 'TSLA']
